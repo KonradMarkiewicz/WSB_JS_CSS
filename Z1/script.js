@@ -28,74 +28,117 @@ function addElement() {
 
 
 function validate(object) {
-
-    // walidujemy wszystkie pola
     const validNumber = validateNumber(object.number);
     const validRadio = validateRadio(object.favouriteNumber);
     const validPassword = validatePassword(object.password);
     const validRepeatedPassword = validateRepeatedPassword(object.password, object.password2);
 
-    // zwracamy wynik walidacji - że formularz ją przeszedł, wszystkie pola muszą być wypełnione poprawnie
     return validNumber && validRadio && validPassword && validRepeatedPassword;
 }
 
 function validateNumber(number) {
-
-    // walidujemy numer, podany w argumencie - w tym wypadku sprawdzamy, czy pasuje do wzorca
     const valid = /^\d+([.,]\d{1,2})?$/.test(number);
-
-    // odszukujemy na stronie odpowiednie pole - input, w którym został wpisany numer
     const input = document.querySelector("input[name='number']");
 
     if (valid) {
-        // jeśli numer pasuje do wzorca - usuwamy ewentualne komunikaty walidacyjne, jeśli są
-
-        // ustawiamy pustą klasę - w razie jakby input był wcześniej oznaczony na czerwono
         input.className = "";
-
         const nameMessage = document.getElementById("number-input-message");
+
         if (nameMessage) {
-            //jeśli wyświetla się komunikat - usuwamy go
             nameMessage.parentElement.removeChild(nameMessage);
         }
     } else {
-        // numer nie pasuje do wzorca - dodajemy komunikaty walidacyjne, jeśli ich nie ma
-
-        // dodajemy inputowi klasę, która oznacza, że coś z nim nie tak
         input.className = "invalid";
 
-        // sprawdzamy, czy wyświetla się komunikat o błędzie w polu z numerem
         if (!document.getElementById("number-input-message")) {
-            // tworzymy element, który będzie mówił o błędzie w wybranym polu
             const small = document.createElement("small");
-            small.id = "number-input-message"; // nadajemy id - potem dzięki niemu dostaniemy się do elementu, żeby go usunąć
-            small.className = "invalid"; // nadajemy klasę - żeby był czerwony
-            small.innerText = "Niepoprawny numer - dopuszczalna tylko dodatnia liczba z maksymalnie dwoma cyframi po przecinku"; // dodajemy tekst, który wyświetli się użytkownikowi
+            small.id = "number-input-message";
+            small.className = "invalid";
+            small.innerText = "Niepoprawny numer - dopuszczalna tylko dodatnia liczba z maksymalnie dwoma cyframi po przecinku";
 
-            // doczepiamy element jako "rodzeństwo" inputa
             input.parentElement.appendChild(small);
         }
     }
 
-    // zwracamy wynik walidacji
     return valid;
 }
 
 function validateRadio(radio) {
-    // todo
+    let valid = false;
+    const input = document.getElementsByName("favouriteNumber");
 
+    for (let i = 0; i < input.length; i++){
+        if (input[i].checked){
+            valid = true;
+            break;
+        }
+    }
+
+    if (valid){
+        input.className = "";
+        const nameMessage = document.getElementById("radio-input-message");
+        if (nameMessage) {
+            nameMessage.parentElement.removeChild(nameMessage);
+        }
+    } else {
+        input.className = "invalid";
+
+        if (!document.getElementById("radio-input-message")) {
+            const small = document.createElement("radioError");
+            small.id = "radio-input-message";
+            small.className = "invalid";
+            small.innerText = "\nNie wybrano żadnej z opcji";
+            input[0].parentElement.appendChild(small);
+      }
+    }
     return true;
 }
 
 function validatePassword(password) {
-    // regex do hasła: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-    // todo
+    const valid = /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/.test(password);
+    const input = document.querySelector("input[name='password']");
 
+    if (valid) {
+        input.className = "";
+        const nameMessage = document.getElementById("password-input-message");
+        if (nameMessage) {
+            nameMessage.parentElement.removeChild(nameMessage);
+        }
+    } else {
+        input.className = "invalid";
+
+        if (!document.getElementById("password-input-message")) {
+            const small = document.createElement("small");
+            small.id = "password-input-message";
+            small.className = "invalid";
+            small.innerText = "Hasło powinno zawierać co najmniej 8 znaków, co najmniej 1 cyfrę, co najmniej 1 wielką literę i co najmniej 1 małą literę ";
+            input.parentElement.appendChild(small);
+        }
+    }
     return true;
 }
 
 function validateRepeatedPassword(password, repeatedPassword) {
-    // todo
+    let valid = false;
+    const input = document.querySelector("input[name='password2']");
 
-    return true;
+    if (password == repeatedPassword) {
+        valid = true;
+        input.className = "";
+        const nameMessage = document.getElementById("password2-input-message");
+        if (nameMessage) {
+            nameMessage.parentElement.removeChild(nameMessage);
+        }
+    } else {
+        input.className = "invalid";
+
+        if (!document.getElementById("password2-input-message")) {
+            const small = document.createElement("small");
+            small.id = "password2-input-message";
+            small.className = "invalid";
+            small.innerText = "Podane hasło jest różne od podanego w polu 'Hasło'";
+            input.parentElement.appendChild(small);
+        }
+    }
+    return valid;
 }
