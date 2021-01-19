@@ -64,17 +64,9 @@ function validateNumber(number) {
 }
 
 function validateRadio(radio) {
-    let valid = false;
     const input = document.getElementsByName("favouriteNumber");
 
-    for (let i = 0; i < input.length; i++){
-        if (input[i].checked){
-            valid = true;
-            break;
-        }
-    }
-
-    if (valid){
+    if (radio !== undefined){
         input.className = "";
         const nameMessage = document.getElementById("radio-input-message");
         if (nameMessage) {
@@ -84,7 +76,7 @@ function validateRadio(radio) {
         input.className = "invalid";
 
         if (!document.getElementById("radio-input-message")) {
-            const small = document.createElement("radioError");
+            const small = document.createElement("small");
             small.id = "radio-input-message";
             small.className = "invalid";
             small.innerText = "\nNie wybrano żadnej z opcji";
@@ -122,7 +114,7 @@ function validateRepeatedPassword(password, repeatedPassword) {
     let valid = false;
     const input = document.querySelector("input[name='password2']");
 
-    if (password == repeatedPassword) {
+    if (password === repeatedPassword) {
         valid = true;
         input.className = "";
         const nameMessage = document.getElementById("password2-input-message");
