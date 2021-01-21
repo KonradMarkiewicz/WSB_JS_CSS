@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+
+<div class="container pt-3">
+
+    <h2 class="text-center pb-3">
+       Facts about animals, but mainly about cats ^o.o^
+    </h2>
+
+
+    <div class="row">
+        <div class=col-sm-6>
+
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label class="col-form-label float-right" style="margin-bottom: 10px">
+                        Animal type:
+                    </label>
+                    <label class="col-form-label float-right">
+                        Number of facts:
+                    </label>
+                </div>
+
+                <div class="col-sm-8">
+                    <select class="form-control" id="animalTypes" style="margin-bottom: 10px">
+                        <option value="cat">cat</option>
+                        <option value="dog">dog</option>
+                        <option value="horse">horse</option>
+                    </select>
+                    <input class="form-control" id="numberOfFacts"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button class="btn btn-primary float-right" onclick="generateFacts()">Generate!</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div id="facts-div" class="text-center"></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
